@@ -32,18 +32,23 @@ class _AuthScreenState extends State<AuthScreen> {
 
     _formKey.currentState!.save();
 
-    if(_isLogin) {
-      // Log user in
-    } else {
-      // Sign user up
-      try {
+    try {
+      if(_isLogin) {
+        // Log user in
+        final userCredentials = await _firebase.signInWithEmailAndPassword(
+          email: _enteredEmail,
+          password: _enteredPassword,
+        );
+        print(userCredentials);
+      } else {
+        // Sign user up
         final userCredentials = await _firebase.createUserWithEmailAndPassword(
           email: _enteredEmail,
           password: _enteredPassword,
         );
-        print(_enteredEmail);
-        print(_enteredPassword);
-      } on FirebaseAuthException catch (error) {
+        print(userCredentials);
+      }
+    } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {
           print('The account already exists for that email.');
         }
@@ -54,8 +59,6 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
         );
       }
-      
-    }
   }
 
   @override
