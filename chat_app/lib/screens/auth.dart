@@ -66,7 +66,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
         await storageRef.putFile(_selectedImage!);
         final imageUrl = await storageRef.getDownloadURL();
-        print(imageUrl); // to be removed in the final version
 
         await FirebaseFirestore.instance
           .collection('users')
