@@ -23,10 +23,19 @@ class _ChatScreenState extends State<ChatScreen> {
     // you could receive a future (look into the lesson about it)
     // with all the notifications settings, witch we do not need here
 
-    // we get the address of the device to identify it
+    // we get the address of this device to identify it
+    // with this token you can send notifications to this device
+    // via FCM
     final token = await fcm.getToken();
+    // you could send this token (via HTTP or Firestore SDK) to a backend
+
     // debug
     print('Token: $token');
+
+    // for this app, that have a single chat room, we will use a different approach
+    // we will subscribe the device to a "topic", and send messages to this topic
+    // this way, all devices subscribed to this topic will receive the message
+    fcm.subscribeToTopic('chat');
 
   }
   
